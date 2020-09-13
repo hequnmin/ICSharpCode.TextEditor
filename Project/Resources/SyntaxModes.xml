@@ -22,8 +22,12 @@
 	<Mode file       = "CSharp-Mode.xshd"
 	      name       = "C#"
 	      extensions = ".cs"/>
-	
-	<Mode file       = "HTML-Mode.xshd"
+
+  <Mode file       = "Expression-Mode.xshd"
+	      name       = "Expression"
+	      extensions = ".exp"/>
+
+  <Mode file       = "HTML-Mode.xshd"
 	      name       = "HTML"
 	      extensions = ".htm;.html"/>
 	

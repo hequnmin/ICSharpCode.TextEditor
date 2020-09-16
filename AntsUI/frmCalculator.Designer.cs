@@ -120,17 +120,16 @@
             // 
             this.Panels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Panels.Location = new System.Drawing.Point(0, 40);
+            this.Panels.Margin = new System.Windows.Forms.Padding(0);
             this.Panels.Name = "Panels";
             // 
             // Panels.Panel1
             // 
             this.Panels.Panel1.Controls.Add(this.tvwFunction);
-            this.Panels.Panel1.Padding = new System.Windows.Forms.Padding(5);
             // 
             // Panels.Panel2
             // 
             this.Panels.Panel2.Controls.Add(this.Panels2);
-            this.Panels.Panel2.Padding = new System.Windows.Forms.Padding(5);
             this.Panels.Size = new System.Drawing.Size(898, 469);
             this.Panels.SplitterDistance = 299;
             this.Panels.TabIndex = 7;
@@ -138,29 +137,27 @@
             // tvwFunction
             // 
             this.tvwFunction.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvwFunction.Location = new System.Drawing.Point(5, 5);
+            this.tvwFunction.Location = new System.Drawing.Point(0, 0);
             this.tvwFunction.Name = "tvwFunction";
-            this.tvwFunction.Size = new System.Drawing.Size(289, 459);
+            this.tvwFunction.Size = new System.Drawing.Size(299, 469);
             this.tvwFunction.TabIndex = 0;
             // 
             // Panels2
             // 
             this.Panels2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panels2.Location = new System.Drawing.Point(5, 5);
+            this.Panels2.Location = new System.Drawing.Point(0, 0);
             this.Panels2.Name = "Panels2";
             this.Panels2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // Panels2.Panel1
             // 
             this.Panels2.Panel1.Controls.Add(this.txtEditor);
-            this.Panels2.Panel1.Padding = new System.Windows.Forms.Padding(5);
             // 
             // Panels2.Panel2
             // 
             this.Panels2.Panel2.Controls.Add(this.txtResult);
-            this.Panels2.Panel2.Padding = new System.Windows.Forms.Padding(5);
-            this.Panels2.Size = new System.Drawing.Size(585, 459);
-            this.Panels2.SplitterDistance = 332;
+            this.Panels2.Size = new System.Drawing.Size(595, 469);
+            this.Panels2.SplitterDistance = 339;
             this.Panels2.TabIndex = 0;
             // 
             // txtEditor
@@ -168,9 +165,9 @@
             this.txtEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtEditor.IsReadOnly = false;
-            this.txtEditor.Location = new System.Drawing.Point(5, 5);
+            this.txtEditor.Location = new System.Drawing.Point(0, 0);
             this.txtEditor.Name = "txtEditor";
-            this.txtEditor.Size = new System.Drawing.Size(575, 322);
+            this.txtEditor.Size = new System.Drawing.Size(595, 339);
             this.txtEditor.TabIndex = 0;
             // 
             // toolStripSeparator1
@@ -186,9 +183,9 @@
             // txtResult
             // 
             this.txtResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtResult.Location = new System.Drawing.Point(5, 5);
+            this.txtResult.Location = new System.Drawing.Point(0, 0);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(575, 113);
+            this.txtResult.Size = new System.Drawing.Size(595, 126);
             this.txtResult.TabIndex = 0;
             this.txtResult.Text = "";
             // 

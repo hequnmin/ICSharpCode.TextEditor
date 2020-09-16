@@ -42,7 +42,7 @@ namespace AntsCore.Expression
     /// <summary>
     /// 运算符类型(从上到下优先级依次递减)，数值越大，优先级越低
     /// </summary>
-    public enum OptType
+    public enum OperatorType
     {
         #region 最高优先级操作符
 
@@ -366,7 +366,7 @@ namespace AntsCore.Expression
     /// </summary>
     public class Operator
     {
-        public Operator(OptType type, string value)
+        public Operator(OperatorType type, string value)
         {
             this.Type = type;
             this.Value = value;
@@ -379,7 +379,7 @@ namespace AntsCore.Expression
         /// <summary>
         /// 运算符类型
         /// </summary>
-        public OptType Type { get; set; }
+        public OperatorType Type { get; set; }
 
         /// <summary>
         /// 运算符值
@@ -463,57 +463,128 @@ namespace AntsCore.Expression
         /// 转换运算符到指定的类型
         /// </summary>
         /// <param name="opt">运算符</param>
+        /// <param name="isBinaryOperator">是否为二元运算符</param>
         /// <returns>返回指定的运算符类型</returns>
-        public static OptType ConvertOperator(string opt)
+        public static OperatorType ConvertOperator(string opt, bool isBinaryOperator)
+        {
+            switch (opt)
+            {
+                case "!": return OperatorType.NOT;
+                case "+": return isBinaryOperator ? OperatorType.ADD : OperatorType.PS;
+                case "-": return isBinaryOperator ? OperatorType.SUB : OperatorType.NS;
+                case "*": return isBinaryOperator ? OperatorType.MUL : OperatorType.ERR;
+                case "/": return isBinaryOperator ? OperatorType.DIV : OperatorType.ERR;
+                case "%": return isBinaryOperator ? OperatorType.MOD : OperatorType.ERR;
+                case "<": return isBinaryOperator ? OperatorType.LT : OperatorType.ERR;
+                case ">": return isBinaryOperator ? OperatorType.GT : OperatorType.ERR;
+                case "<=": return isBinaryOperator ? OperatorType.LE : OperatorType.ERR;
+                case ">=": return isBinaryOperator ? OperatorType.GE : OperatorType.ERR;
+                case "<>": return isBinaryOperator ? OperatorType.UT : OperatorType.ERR;
+                case "=": return isBinaryOperator ? OperatorType.ET : OperatorType.ERR;
+                case "&": return isBinaryOperator ? OperatorType.AND : OperatorType.ERR;
+                case "|": return isBinaryOperator ? OperatorType.OR : OperatorType.ERR;
+                case ",": return isBinaryOperator ? OperatorType.CA : OperatorType.ERR;
+                case "@": return isBinaryOperator ? OperatorType.END : OperatorType.ERR;
+                default: return OperatorType.ERR;
+            }
+        }
+
+        /// <summary>
+        /// 转换运算符到指定的类型
+        /// </summary>
+        /// <param name="opt">运算符</param>
+        /// <returns>返回指定的运算符类型</returns>
+        public static OperatorType ConvertOperator(string opt)
         {
             opt = opt.ToLower(); // svn add 307
 
             switch (opt)
             {
-                case "~": return OptType.NS;
-                case "!": return OptType.NOT;
-                case "+": return OptType.ADD;
-                case "-": return OptType.SUB;
-                case "*": return OptType.MUL;
-                case "/": return OptType.DIV;
-                case "%": return OptType.MOD;
-                case "<": return OptType.LT;
-                case ">": return OptType.GT;
-                case "<=": return OptType.LE;
-                case ">=": return OptType.GE;
-                case "<>": return OptType.UT;
+                case "~": return OperatorType.NS;
+                case "!": return OperatorType.NOT;
+                case "+": return OperatorType.ADD;
+                case "-": return OperatorType.SUB;
+                case "*": return OperatorType.MUL;
+                case "/": return OperatorType.DIV;
+                case "%": return OperatorType.MOD;
+                case "<": return OperatorType.LT;
+                case ">": return OperatorType.GT;
+                case "<=": return OperatorType.LE;
+                case ">=": return OperatorType.GE;
+                case "<>": return OperatorType.UT;
                 //case "=": return OptType.ET;
-                case "==": return OptType.ET;
-                case "&": return OptType.AND;
-                case "|": return OptType.OR;
-                case ",": return OptType.CA;
-                case "@": return OptType.END;
-                case "tan": return OptType.TAN;
-                case "cot": return OptType.COT;
-                case "atan": return OptType.ATAN;
-                case "sin": return OptType.SIN; // svn add 307
-                case "cos": return OptType.COS;
-                case "abs": return OptType.Abs;
-                case "sqrt": return OptType.Sqrt;
-                case "floor": return OptType.Floor;
-                case "ceiling": return OptType.Ceiling;
-                case "round": return OptType.Round;
-                case "pow": return OptType.Pow;
-                case "cube": return OptType.Cube;
-                case "ln": return OptType.Ln;
-                case "log": return OptType.Log;
-                case "hex": return OptType.Hex;
-                case "dec": return OptType.Dec;
-                case "substring": return OptType.Substring;
-                case "random": return OptType.Random;
-                case "date": return OptType.Date;
-                case "today": return OptType.Today;
-                case "now": return OptType.Now;
-                case "year": return OptType.Year;
-                case "month": return OptType.Month;
-                case "day": return OptType.Day;
-                case "if": return OptType.If;
-                default: return OptType.ERR;
+                case "==": return OperatorType.ET;
+                case "&": return OperatorType.AND;
+                case "|": return OperatorType.OR;
+                case ",": return OperatorType.CA;
+                case "@": return OperatorType.END;
+                case "tan": return OperatorType.TAN;
+                case "cot": return OperatorType.COT;
+                case "atan": return OperatorType.ATAN;
+                case "sin": return OperatorType.SIN; // svn add 307
+                case "cos": return OperatorType.COS;
+                case "abs": return OperatorType.Abs;
+                case "sqrt": return OperatorType.Sqrt;
+                case "floor": return OperatorType.Floor;
+                case "ceiling": return OperatorType.Ceiling;
+                case "round": return OperatorType.Round;
+                case "pow": return OperatorType.Pow;
+                case "cube": return OperatorType.Cube;
+                case "ln": return OperatorType.Ln;
+                case "log": return OperatorType.Log;
+                case "hex": return OperatorType.Hex;
+                case "dec": return OperatorType.Dec;
+                case "substring": return OperatorType.Substring;
+                case "random": return OperatorType.Random;
+                case "date": return OperatorType.Date;
+                case "today": return OperatorType.Today;
+                case "now": return OperatorType.Now;
+                case "year": return OperatorType.Year;
+                case "month": return OperatorType.Month;
+                case "day": return OperatorType.Day;
+                case "if": return OperatorType.If;
+                default: return OperatorType.ERR;
+            }
+        }
+
+        /// <summary>
+        /// 运算符是否为二元运算符,该方法有问题，暂不使用
+        /// </summary>
+        /// <param name="tokens">语法单元堆栈</param>
+        /// <param name="operators">运算符堆栈</param>
+        /// <param name="currentOpd">当前操作数</param>
+        /// <returns>是返回真,否返回假</returns>
+        public static bool IsBinaryOperator(ref Stack<object> tokens, ref Stack<Operator> operators, string currentOpd)
+        {
+            if (currentOpd != "")
+            {
+                return true;
+            }
+            else
+            {
+                object token = tokens.Peek();
+                if (token is Operand)
+                {
+                    if (operators.Peek().Type != OperatorType.LB)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (((Operator)token).Type == OperatorType.RB)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
         }
 
@@ -523,7 +594,7 @@ namespace AntsCore.Expression
         /// <param name="optA">运算符类型A</param>
         /// <param name="optB">运算符类型B</param>
         /// <returns>A与B相比，-1，低；0,相等；1，高</returns>
-        public static int ComparePriority(OptType optA, OptType optB)
+        public static int ComparePriority(OperatorType optA, OperatorType optB)
         {
             if (optA == optB)
             {
@@ -532,31 +603,31 @@ namespace AntsCore.Expression
             }
 
             //乘,除,余(*,/,%)
-            if ((optA >= OptType.MUL && optA <= OptType.MOD) &&
-                (optB >= OptType.MUL && optB <= OptType.MOD))
+            if ((optA >= OperatorType.MUL && optA <= OperatorType.MOD) &&
+                (optB >= OperatorType.MUL && optB <= OperatorType.MOD))
             {
                 return 0;
             }
             //加,减(+,-)
-            if ((optA >= OptType.ADD && optA <= OptType.SUB) &&
-                (optB >= OptType.ADD && optB <= OptType.SUB))
+            if ((optA >= OperatorType.ADD && optA <= OperatorType.SUB) &&
+                (optB >= OperatorType.ADD && optB <= OperatorType.SUB))
             {
                 return 0;
             }
             //小于,小于或等于,大于,大于或等于(<,<=,>,>=)
-            if ((optA >= OptType.LT && optA <= OptType.GE) &&
-                (optB >= OptType.LT && optB <= OptType.GE))
+            if ((optA >= OperatorType.LT && optA <= OperatorType.GE) &&
+                (optB >= OperatorType.LT && optB <= OperatorType.GE))
             {
                 return 0;
             }
             //等于,不等于(=,<>)
-            if ((optA >= OptType.ET && optA <= OptType.UT) &&
-                (optB >= OptType.ET && optB <= OptType.UT))
+            if ((optA >= OperatorType.ET && optA <= OperatorType.UT) &&
+                (optB >= OperatorType.ET && optB <= OperatorType.UT))
             {
                 return 0;
             }
             //函数  
-            if (optA >= OptType.TAN && optA < OptType.MUL && optB >= OptType.TAN && optB < OptType.MUL)
+            if (optA >= OperatorType.TAN && optA < OperatorType.MUL && optB >= OperatorType.TAN && optB < OperatorType.MUL)
             {
                 return 0;
             }
@@ -709,6 +780,7 @@ namespace AntsCore.Expression
             else if (!IsMatching(exp))//括号、引号、单引号等必须配对
                 return false;
 
+            exp = exp.Trim();
             exp = exp.Replace("（", "(");
             exp = exp.Replace("）", ")");
             exp = exp.Replace("！", "!");
@@ -718,6 +790,8 @@ namespace AntsCore.Expression
 
             exp = exp.Replace("\r", "");
             exp = exp.Replace("\n", "");
+            if (exp.StartsWith("="))        //以=号开头的公式，去除=号
+                exp = exp.Substring(1);
 
             #endregion
 
@@ -728,7 +802,7 @@ namespace AntsCore.Expression
 
             var nums = new Stack<object>();         //操作数堆栈
             var operators = new Stack<Operator>();      //运算符堆栈
-            var optType = OptType.ERR;             //运算符类型
+            var optType = OperatorType.ERR;             //运算符类型
             var curNum = "";                            //当前操作数
             var curOpt = "";                            //当前运算符
             var curPos = 0;                             //当前位置
@@ -755,7 +829,7 @@ namespace AntsCore.Expression
                 //若当前运算符为左括号,则直接存入堆栈。
                 if (curOpt == "(")
                 {
-                    operators.Push(new Operator(OptType.LB, "("));
+                    operators.Push(new Operator(OperatorType.LB, "("));
                     exp = exp.Substring(curPos + 1).Trim();
                     continue;
                 }
@@ -765,7 +839,7 @@ namespace AntsCore.Expression
                 {
                     while (operators.Count > 0)
                     {
-                        if (operators.Peek().Type != OptType.LB)
+                        if (operators.Peek().Type != OperatorType.LB)
                         {
                             nums.Push(operators.Pop());
                         }
@@ -785,7 +859,7 @@ namespace AntsCore.Expression
                 optType = Operator.ConvertOperator(curOpt);
 
                 //若运算符堆栈为空,或者若运算符堆栈栈顶为左括号,则将当前运算符直接存入运算符堆栈.
-                if (operators.Count == 0 || operators.Peek().Type == OptType.LB)
+                if (operators.Count == 0 || operators.Peek().Type == OperatorType.LB)
                 {
                     operators.Push(new Operator(optType, curOpt));
                     exp = exp.Substring(curPos + 1).Trim();
@@ -806,7 +880,7 @@ namespace AntsCore.Expression
                     while (operators.Count > 0)
                     {
                         if (Operator.ComparePriority(optType, operators.Peek().Type) <= 0 &&
-                            operators.Peek().Type != OptType.LB)
+                            operators.Peek().Type != OperatorType.LB)
                         {
                             nums.Push(operators.Pop());
 
@@ -872,7 +946,8 @@ namespace AntsCore.Expression
                     expT[i] = '#';
             }
 
-            exp = string.Join("", expT).Replace("#", "");
+            //exp = string.Join("", expT).Replace("#", "");     // 1+2计算公式都错误，Min
+            exp = string.Join("", expT).Replace("#", "+");
 
             return exp;
         }
@@ -916,18 +991,18 @@ namespace AntsCore.Expression
                         {
                             #region 其他
 
-                            case OptType.LB:
+                            case OperatorType.LB:
                                 continue;
-                            case OptType.RB:
+                            case OperatorType.RB:
                                 continue;
-                            case OptType.PS:
+                            case OperatorType.PS:
                                 continue;
 
                             #endregion
 
                             #region ~ Negtive 取负数
 
-                            case OptType.NS:
+                            case OperatorType.NS:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -943,7 +1018,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 乘,*,multiplication
-                            case OptType.MUL:
+                            case OperatorType.MUL:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value) && Operand.IsNumber(opdB.Value))
@@ -958,7 +1033,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 除,/,division
-                            case OptType.DIV:
+                            case OperatorType.DIV:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value) && Operand.IsNumber(opdB.Value))
@@ -973,7 +1048,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 余,%,modulus
-                            case OptType.MOD:
+                            case OperatorType.MOD:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value) && Operand.IsNumber(opdB.Value))
@@ -989,7 +1064,7 @@ namespace AntsCore.Expression
 
                             #region 加,+,Addition
 
-                            case OptType.ADD:
+                            case OperatorType.ADD:
                                 opdA = opds.Pop();
                                 if (opds.Count > 0)
                                 {
@@ -1020,7 +1095,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 减,-,subtraction
-                            case OptType.SUB:
+                            case OperatorType.SUB:
                                 opdA = opds.Pop();
                                 if (opds.Count > 0)
                                 {
@@ -1038,7 +1113,7 @@ namespace AntsCore.Expression
 
                             #region 逻辑运算符 true 1 false -1
 
-                            case OptType.NOT: // 非
+                            case OperatorType.NOT: // 非
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                     opds.Push(
@@ -1049,7 +1124,7 @@ namespace AntsCore.Expression
                                     throw new Exception("加运算的两个操作数必须均为数字");
                                 break;
 
-                            case OptType.LT:
+                            case OperatorType.LT:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == Type.NUMBER && opdB.Type == Type.NUMBER)
@@ -1061,7 +1136,7 @@ namespace AntsCore.Expression
                                     throw new Exception("小于运算符的两个操作数必须数字");
                                 }
                                 break;
-                            case OptType.LE:
+                            case OperatorType.LE:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == Type.NUMBER && opdB.Type == Type.NUMBER)
@@ -1073,7 +1148,7 @@ namespace AntsCore.Expression
                                     throw new Exception("小于等于运算符的两个操作数必须数字");
                                 }
                                 break;
-                            case OptType.GT:
+                            case OperatorType.GT:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == Type.NUMBER && opdB.Type == Type.NUMBER)
@@ -1085,7 +1160,7 @@ namespace AntsCore.Expression
                                     throw new Exception("大于运算符的两个操作数必须数字");
                                 }
                                 break;
-                            case OptType.GE:
+                            case OperatorType.GE:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == Type.NUMBER && opdB.Type == Type.NUMBER)
@@ -1097,7 +1172,7 @@ namespace AntsCore.Expression
                                     throw new Exception("大于等于运算符的两个操作数必须数字");
                                 }
                                 break;
-                            case OptType.ET:
+                            case OperatorType.ET:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == opdB.Type)
@@ -1109,7 +1184,7 @@ namespace AntsCore.Expression
                                     throw new Exception("等于运算符的两个操作数必须相同");
                                 }
                                 break;
-                            case OptType.UT:
+                            case OperatorType.UT:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 if (opdA.Type == opdB.Type)
@@ -1121,18 +1196,18 @@ namespace AntsCore.Expression
                                     throw new Exception("不等于运算符的两个操作数必须相同");
                                 }
                                 break;
-                            case OptType.AND:
+                            case OperatorType.AND:
                                 break;
-                            case OptType.OR:
+                            case OperatorType.OR:
                                 break;
-                            case OptType.CA:
+                            case OperatorType.CA:
                                 break;
 
                             #endregion
 
                             #region 正切,tan,subtraction
 
-                            case OptType.TAN:
+                            case OperatorType.TAN:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1148,7 +1223,7 @@ namespace AntsCore.Expression
 
                             #region 余切,cot
 
-                            case OptType.COT:
+                            case OperatorType.COT:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1164,7 +1239,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 反正切,atan,subtraction
-                            case OptType.ATAN:
+                            case OperatorType.ATAN:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1179,7 +1254,7 @@ namespace AntsCore.Expression
 
                             #region 正弦,sin 角度
 
-                            case OptType.SIN:
+                            case OperatorType.SIN:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1196,7 +1271,7 @@ namespace AntsCore.Expression
 
                             #region 余弦,cos 角度
 
-                            case OptType.COS:
+                            case OperatorType.COS:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1213,7 +1288,7 @@ namespace AntsCore.Expression
 
                             #region Abs
 
-                            case OptType.Abs:
+                            case OperatorType.Abs:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1230,7 +1305,7 @@ namespace AntsCore.Expression
 
                             #region Floor
 
-                            case OptType.Floor:
+                            case OperatorType.Floor:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1247,7 +1322,7 @@ namespace AntsCore.Expression
 
                             #region Ceiling
 
-                            case OptType.Ceiling:
+                            case OperatorType.Ceiling:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1264,7 +1339,7 @@ namespace AntsCore.Expression
 
                             #region 开平方 Sqrt
 
-                            case OptType.Sqrt:
+                            case OperatorType.Sqrt:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1281,7 +1356,7 @@ namespace AntsCore.Expression
 
                             #region 四舍五入
 
-                            case OptType.Round:
+                            case OperatorType.Round:
                                 opdA = opds.Pop();
                                 if (opds.Count > 0)
                                 {
@@ -1314,7 +1389,7 @@ namespace AntsCore.Expression
 
                             #region 幂
 
-                            case OptType.Pow:
+                            case OperatorType.Pow:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1327,7 +1402,7 @@ namespace AntsCore.Expression
                                 }
                                 break;
 
-                            case OptType.Cube:
+                            case OperatorType.Cube:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1344,7 +1419,7 @@ namespace AntsCore.Expression
 
                             #region 对数
 
-                            case OptType.Ln:
+                            case OperatorType.Ln:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1355,7 +1430,7 @@ namespace AntsCore.Expression
                                     throw new Exception("对数运算的1个操作数必须是数字");
                                 break;
 
-                            case OptType.Log:
+                            case OperatorType.Log:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1368,7 +1443,7 @@ namespace AntsCore.Expression
                             #endregion
 
                             #region 其他函数
-                            case OptType.Hex:
+                            case OperatorType.Hex:
                                 opdA = opds.Pop();
                                 if (Operand.IsNumber(opdA.Value))
                                 {
@@ -1378,7 +1453,7 @@ namespace AntsCore.Expression
                                 else
                                     throw new Exception("十六进制运算的1个操作数必须是数字");
                                 break;
-                            case OptType.Dec:
+                            case OperatorType.Dec:
                                 opdA = opds.Pop();
                                 if (opdA.Type == Type.STRING)
                                 {
@@ -1390,7 +1465,7 @@ namespace AntsCore.Expression
                                     throw new Exception("十进制运算的1个操作数必须是字符串");
                                 }
                                 break;
-                            case OptType.Random:
+                            case OperatorType.Random:
                                 if (opds.Count <= 0)
                                 {
                                     Random rand = new Random();
@@ -1401,7 +1476,7 @@ namespace AntsCore.Expression
                                     throw new Exception("随机数运算的无需操作数");
                                 }
                                 break;
-                            case OptType.Substring:
+                            case OperatorType.Substring:
                                 opdA = opds.Pop();
                                 if (opds.Count > 0)
                                 {
@@ -1437,7 +1512,7 @@ namespace AntsCore.Expression
                                     throw new Exception($"检索子字符串函数必须3个参数.");
                                 }
                                 break;
-                            case OptType.Date:
+                            case OperatorType.Date:
                                 if (opds.Count >= 3)
                                 {
                                     opdA = opds.Pop();
@@ -1451,7 +1526,7 @@ namespace AntsCore.Expression
                                     throw new Exception("日期函数的需3个操作数");
                                 }
                                 break;
-                            case OptType.Today:
+                            case OperatorType.Today:
                                 if (opds.Count <= 0)
                                 {
                                     string today = DateTime.Today.ToString("yyyy-MM-dd");
@@ -1462,7 +1537,7 @@ namespace AntsCore.Expression
                                     throw new Exception("当前日期函数的无需操作数");
                                 }
                                 break;
-                            case OptType.Now:
+                            case OperatorType.Now:
                                 if (opds.Count <= 0)
                                 {
                                     string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff");
@@ -1473,7 +1548,7 @@ namespace AntsCore.Expression
                                     throw new Exception("当前时间函数的无需操作数");
                                 }
                                 break;
-                            case OptType.Year:
+                            case OperatorType.Year:
                                 if (opds.Count > 0)
                                 {
                                     opdA = opds.Pop();
@@ -1492,7 +1567,7 @@ namespace AntsCore.Expression
                                     throw new Exception("年份函数的需1个日期类型操作数");
                                 }
                                 break;
-                            case OptType.Month:
+                            case OperatorType.Month:
                                 if (opds.Count > 0)
                                 {
                                     opdA = opds.Pop();
@@ -1511,7 +1586,7 @@ namespace AntsCore.Expression
                                     throw new Exception("月份函数的需1个日期类型操作数");
                                 }
                                 break;
-                            case OptType.Day:
+                            case OperatorType.Day:
                                 if (opds.Count > 0)
                                 {
                                     opdA = opds.Pop();
@@ -1530,7 +1605,7 @@ namespace AntsCore.Expression
                                     throw new Exception("第几天函数的需1个日期类型操作数");
                                 }
                                 break;
-                            case OptType.If:
+                            case OperatorType.If:
                                 opdA = opds.Pop();
                                 opdB = opds.Pop();
                                 opdC = opds.Pop();
@@ -1548,9 +1623,9 @@ namespace AntsCore.Expression
                                 break;
                             #endregion
 
-                            case OptType.END:
+                            case OperatorType.END:
                                 break;
-                            case OptType.ERR:
+                            case OperatorType.ERR:
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -1568,6 +1643,26 @@ namespace AntsCore.Expression
                 throw ex;
             }
 
+        }
+    
+        public bool Validate()
+        {
+            if (Tokens.Count == 0) return false;
+            foreach (var item in Tokens)
+            {
+                if (item is Operand operand)
+                {
+                    
+                }
+                else
+                {
+                    if (((Operator)item).Type == OperatorType.ERR)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

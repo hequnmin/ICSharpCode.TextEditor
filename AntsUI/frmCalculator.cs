@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AntsCore.Expression;
 using ICSharpCode.TextEditor.Document;
+using System.Text.RegularExpressions;
 
 namespace Example
 {
@@ -120,6 +121,92 @@ namespace Example
                     //txtResult.Text = $"error.{ex.Message}";
                 }
             }
+        }
+
+        public static string ExpressionReplaceFake(string exp, string pattern)
+        {
+            string expression = exp;
+            if (!string.IsNullOrWhiteSpace(expression))
+            {
+                //正则表达式查找匹配，并替换
+                Match match = Regex.Match(expression, pattern, RegexOptions.IgnoreCase);
+
+                Random rnd = new Random();
+
+                while (match.Success)
+                {
+                    string[] keys;
+                    keys = match.Value.Replace("&", "").Split(':');
+                    int cmdSort = Convert.ToInt32(Regex.Replace(keys[0], "[a-z]", "", RegexOptions.IgnoreCase));
+                    int valSort = Convert.ToInt32(Regex.Replace(keys[1], "[a-z]", "", RegexOptions.IgnoreCase));
+                    double value = 0;
+                    value = rnd.NextDouble();
+                    value = Math.Round(value * 100, 2);
+                    expression = expression.Replace(match.Value, value.ToString());
+
+                    match = Regex.Match(expression, pattern, RegexOptions.IgnoreCase);
+                }
+            }
+            return expression;
+        }
+
+        private void btnValidate_Click(object sender, EventArgs e)
+        {
+            bool validate;
+            string exp = txtEditor.Text;
+
+            try
+            {
+                exp = ExpressionReplaceFake(exp, "&cmd[0-9]:val[0-9]");
+
+                ReversePolishNotation rpn = new ReversePolishNotation();
+                rpn.Parse(exp);
+                validate = rpn.Validate();
+
+                //string value = rpn.Evaluate().ToString();
+            }
+            catch (Exception exception)
+            {
+                txtResult.Clear();
+                txtResult.AppendText(exception.Message);
+                return;
+            }
+
+            if (validate)
+            {
+                txtResult.Clear();
+                txtResult.AppendText("验证通过！");
+            }
+            else
+            {
+                txtResult.Clear();
+                txtResult.AppendText("语法错误！");
+            }
+
+
+        }
+
+        private void btnEvaldate_Click(object sender, EventArgs e)
+        {
+            string exp = txtEditor.Text;
+            string value;
+
+            try
+            {
+                exp = ExpressionReplaceFake(exp, "&cmd[0-9]:val[0-9]");
+
+                ReversePolishNotation rpn = new ReversePolishNotation();
+                rpn.Parse(exp);
+
+                value = rpn.Evaluate().ToString();
+            }
+            catch(Exception exception)
+            {
+                value = exception.Message;
+            }
+
+            txtResult.Clear();
+            txtResult.AppendText(value);
         }
     }
 }

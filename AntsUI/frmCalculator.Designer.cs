@@ -33,13 +33,13 @@
             this.toolbarContainer = new System.Windows.Forms.ToolStripContainer();
             this.toolbar = new System.Windows.Forms.ToolStrip();
             this.btnValidate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnEvaldate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.Panels = new System.Windows.Forms.SplitContainer();
             this.tvwFunction = new System.Windows.Forms.TreeView();
             this.Panels2 = new System.Windows.Forms.SplitContainer();
             this.txtEditor = new ICSharpCode.TextEditor.TextEditorControl();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.txtResult = new System.Windows.Forms.RichTextBox();
             this.toolbarContainer.ContentPanel.SuspendLayout();
             this.toolbarContainer.SuspendLayout();
@@ -69,11 +69,11 @@
             // toolbarContainer.ContentPanel
             // 
             this.toolbarContainer.ContentPanel.Controls.Add(this.toolbar);
-            this.toolbarContainer.ContentPanel.Size = new System.Drawing.Size(898, 40);
+            this.toolbarContainer.ContentPanel.Size = new System.Drawing.Size(898, 36);
             this.toolbarContainer.Dock = System.Windows.Forms.DockStyle.Top;
             this.toolbarContainer.Location = new System.Drawing.Point(0, 0);
             this.toolbarContainer.Name = "toolbarContainer";
-            this.toolbarContainer.Size = new System.Drawing.Size(898, 40);
+            this.toolbarContainer.Size = new System.Drawing.Size(898, 36);
             this.toolbarContainer.TabIndex = 6;
             this.toolbarContainer.Text = "toolStripContainer1";
             this.toolbarContainer.TopToolStripPanelVisible = false;
@@ -88,38 +88,46 @@
             this.toolStripSeparator2});
             this.toolbar.Location = new System.Drawing.Point(0, 0);
             this.toolbar.Name = "toolbar";
-            this.toolbar.Size = new System.Drawing.Size(898, 40);
+            this.toolbar.Size = new System.Drawing.Size(898, 36);
             this.toolbar.TabIndex = 0;
             this.toolbar.Text = "toolStrip1";
             // 
             // btnValidate
             // 
-            this.btnValidate.AutoSize = false;
             this.btnValidate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnValidate.Image = ((System.Drawing.Image)(resources.GetObject("btnValidate.Image")));
             this.btnValidate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnValidate.Name = "btnValidate";
-            this.btnValidate.Size = new System.Drawing.Size(80, 37);
+            this.btnValidate.Size = new System.Drawing.Size(36, 33);
             this.btnValidate.Text = "验证";
             this.btnValidate.ToolTipText = "验证公式或表达式的语法合法性";
             this.btnValidate.Click += new System.EventHandler(this.btnValidate_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // btnEvaldate
             // 
-            this.btnEvaldate.AutoSize = false;
             this.btnEvaldate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnEvaldate.Image = ((System.Drawing.Image)(resources.GetObject("btnEvaldate.Image")));
             this.btnEvaldate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEvaldate.Name = "btnEvaldate";
-            this.btnEvaldate.Size = new System.Drawing.Size(80, 37);
+            this.btnEvaldate.Size = new System.Drawing.Size(36, 22);
             this.btnEvaldate.Text = "运算";
             this.btnEvaldate.ToolTipText = "对公式或表达式进行运算";
             this.btnEvaldate.Click += new System.EventHandler(this.btnEvaldate_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // Panels
             // 
             this.Panels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panels.Location = new System.Drawing.Point(0, 40);
+            this.Panels.Location = new System.Drawing.Point(0, 36);
             this.Panels.Margin = new System.Windows.Forms.Padding(0);
             this.Panels.Name = "Panels";
             // 
@@ -130,7 +138,7 @@
             // Panels.Panel2
             // 
             this.Panels.Panel2.Controls.Add(this.Panels2);
-            this.Panels.Size = new System.Drawing.Size(898, 469);
+            this.Panels.Size = new System.Drawing.Size(898, 473);
             this.Panels.SplitterDistance = 299;
             this.Panels.TabIndex = 7;
             // 
@@ -139,7 +147,7 @@
             this.tvwFunction.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvwFunction.Location = new System.Drawing.Point(0, 0);
             this.tvwFunction.Name = "tvwFunction";
-            this.tvwFunction.Size = new System.Drawing.Size(299, 469);
+            this.tvwFunction.Size = new System.Drawing.Size(299, 473);
             this.tvwFunction.TabIndex = 0;
             // 
             // Panels2
@@ -156,8 +164,8 @@
             // Panels2.Panel2
             // 
             this.Panels2.Panel2.Controls.Add(this.txtResult);
-            this.Panels2.Size = new System.Drawing.Size(595, 469);
-            this.Panels2.SplitterDistance = 339;
+            this.Panels2.Size = new System.Drawing.Size(595, 473);
+            this.Panels2.SplitterDistance = 341;
             this.Panels2.TabIndex = 0;
             // 
             // txtEditor
@@ -167,25 +175,15 @@
             this.txtEditor.IsReadOnly = false;
             this.txtEditor.Location = new System.Drawing.Point(0, 0);
             this.txtEditor.Name = "txtEditor";
-            this.txtEditor.Size = new System.Drawing.Size(595, 339);
+            this.txtEditor.Size = new System.Drawing.Size(595, 341);
             this.txtEditor.TabIndex = 0;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 40);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 40);
             // 
             // txtResult
             // 
             this.txtResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtResult.Location = new System.Drawing.Point(0, 0);
             this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(595, 126);
+            this.txtResult.Size = new System.Drawing.Size(595, 128);
             this.txtResult.TabIndex = 0;
             this.txtResult.Text = "";
             // 
